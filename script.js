@@ -1,7 +1,47 @@
-document.getElementById("textForm").addEventListener("submit", function (event) {
+// Grammar Checker Implementation
+document.getElementById("checkGrammar").addEventListener("click", async () => {
+    const text = document.getElementById("grammarInput").value;
+
+    // LanguageTool API URL
+    const url = 'https://api.languagetool.org/v2/check';
+
+    // API Request
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+            language: 'en-GB', // Use UK English
+            text: text
+        })
+    });
+
+    const result = await response.json();
+
+    // Get the results div
+    const resultsDiv = document.getElementById("grammarResults");
+    resultsDiv.innerHTML = ''; // Clear previous results
+
+    // Check if there are any matches (mistakes)
+    if (result.matches.length === 0) {
+        // If no mistakes, show "No mistakes found"
+        resultsDiv.innerHTML = '<p style="color: green; font-weight: bold;">No mistakes found!</p>';
+    } else {
+        // Display the mistakes with numbering
+        result.matches.forEach((match, index) => {
+            const error = document.createElement("div");
+            error.innerHTML = `
+                <p><strong>Error ${index + 1}:</strong> ${match.message}</p>
+                <p><strong>Suggestions:</strong> ${match.replacements.map(r => r.value).join(', ')}</p>
+            `;
+            resultsDiv.appendChild(error);
+        });
+    }
+});
+
+// Evaluation Tool Implementation
+document.getElementById("evaluationForm").addEventListener("submit", function (event) {
     event.preventDefault();
 
-    // Split the text into sentences
     const userRequest = document.getElementById("userRequest").value.split('.').filter(Boolean);
     const responseA = document.getElementById("responseA").value.split('.').filter(Boolean);
     const responseB = document.getElementById("responseB").value.split('.').filter(Boolean);
@@ -19,35 +59,12 @@ document.getElementById("textForm").addEventListener("submit", function (event) 
             <tbody>
     `;
 
-    // Helper function to highlight differences
-    function highlightDifferences(text1, text2) {
-        if (!text1 || !text2) return text1 || text2;
-
-        let diff = '';
-        const words1 = text1.split(' ');
-        const words2 = text2.split(' ');
-
-        for (let i = 0; i < Math.max(words1.length, words2.length); i++) {
-            if (words1[i] !== words2[i]) {
-                diff += `<span style="background-color: yellow">${words2[i] || ''}</span> `;
-            } else {
-                diff += `${words2[i] || ''} `;
-            }
-        }
-
-        return diff.trim();
-    }
-
-    // Generate table rows
     for (let i = 0; i < maxLength; i++) {
-        const highlightedResponseA = highlightDifferences(responseA[i], responseB[i]);
-        const highlightedResponseB = highlightDifferences(responseB[i], responseA[i]);
-
         tableHTML += `
             <tr>
                 <td>${userRequest[i] || ''}</td>
-                <td>${highlightedResponseA || ''}</td>
-                <td>${highlightedResponseB || ''}</td>
+                <td>${responseA[i] || ''}</td>
+                <td>${responseB[i] || ''}</td>
             </tr>
         `;
     }
@@ -57,5 +74,16 @@ document.getElementById("textForm").addEventListener("submit", function (event) 
         </table>
     `;
 
-    document.getElementById("result").innerHTML = tableHTML;
+    document.getElementById("evaluationResults").innerHTML = tableHTML;
+});
+
+// Switch between Grammar Checker and Evaluation Tool
+document.getElementById("grammarButton").addEventListener("click", () => {
+    document.getElementById("grammarSection").style.display = "block";
+    document.getElementById("evaluationSection").style.display = "none";
+});
+
+document.getElementById("evaluationButton").addEventListener("click", () => {
+    document.getElementById("grammarSection").style.display = "none";
+    document.getElementById("evaluationSection").style.display = "block";
 });
