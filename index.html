@@ -3,18 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Separator</title>
+    <title>Grammar & Evaluation Tool</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Text Composition Evaluation Tool </h1>
-    <form id="textForm">
-        <textarea id="userRequest" placeholder="Enter User Request" rows="6"></textarea>
-        <textarea id="responseA" placeholder="Enter Response A" rows="6"></textarea>
-        <textarea id="responseB" placeholder="Enter Response B" rows="6"></textarea>
-        <button type="submit">Submit</button>
-    </form>
-    <div id="result"></div>
+    <header>
+        <h1>Text Composition Evaluation Tool</h1>
+        <nav>
+            <button id="grammarButton">Grammar Checker</button>
+            <button id="evaluationButton">Evaluation Tool</button>
+        </nav>
+    </header>
+
+    <!-- Grammar Checker Section -->
+    <section id="grammarSection">
+        <h2>Grammar Checker</h2>
+        <textarea id="grammarInput" placeholder="Enter your text here..." rows="8"></textarea>
+        <button id="checkGrammar">Check Grammar</button>
+        <div id="grammarResults"></div>
+    </section>
+
+    <!-- Evaluation Tool Section -->
+    <section id="evaluationSection" style="display: none;">
+        <h2>Evaluation Tool</h2>
+        <form id="evaluationForm">
+            <textarea id="userRequest" placeholder="Enter User Request" rows="4"></textarea>
+            <textarea id="responseA" placeholder="Enter Response A" rows="4"></textarea>
+            <textarea id="responseB" placeholder="Enter Response B" rows="4"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="evaluationResults"></div>
+    </section>
+
     <script src="script.js"></script>
 </body>
 </html>
