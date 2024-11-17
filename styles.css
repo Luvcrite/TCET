@@ -1,61 +1,79 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
-    background-color: #f4f4f9;
+    padding: 0;
+    background-color: #f9f9f9;
 }
 
-h1 {
+header {
+    background-color: #70159a;
+    color: white;
+    padding: 10px;
     text-align: center;
-    margin-bottom: 20px;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 600px;
-    margin: 0 auto 20px auto;
+nav {
+    margin-top: 10px;
+}
+
+button {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #a15ab0;
+    color: white;
+}
+
+button:hover {
+    background-color: #5f147a;
+}
+
+section {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 textarea {
     width: 100%;
     padding: 10px;
+    margin-bottom: 10px;
     font-size: 16px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
+#grammarResults, #evaluationResults {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f4f4f4;
     border-radius: 5px;
-    cursor: pointer;
 }
 
-button:hover {
-    background-color: #0056b3;
-}
-
-#result {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
+/* Styling for the table */
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse; /* Ensures no double borders */
     margin-top: 20px;
 }
 
 table, th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #ddd; /* Adds a border to the table, headers, and cells */
 }
 
 th, td {
-    padding: 10px;
-    text-align: left;
+    padding: 10px; /* Adds padding to table cells for better readability */
+    text-align: left; /* Aligns text to the left */
+}
+
+th {
+    background-color: #f4f4f4; /* Adds a light background color to the header */
+    font-weight: bold; /* Makes header text bold */
 }
